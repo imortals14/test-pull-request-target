@@ -1,0 +1,17 @@
+name: POC pull_request_target
+
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show PR author
+        run: echo "PR from ${{ github.event.pull_request.user.login }}"
+      - name: Show token permissions
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               https://api.github.com/repos/${{ github.repository }}/actions/permissions
